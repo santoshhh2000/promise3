@@ -1,0 +1,53 @@
+function getColdDrinks() {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            console.log('Got cold drinks after getting butter');
+            resolve('Cold drinks obtained');
+        }, 1000);
+    });
+}
+
+async function mainAsyncAwait() {
+    try {
+        const userPost = "This is my first post";
+        const createdPost = await createPost(userPost);
+        const lastActivityTime = await updateLastUserActivityTime();
+        console.log(createdPost);
+        console.log(`Last Activity Time: ${lastActivityTime}`);
+
+        const deletedPost = await deletePost(createdPost);
+        console.log(deletedPost);
+        console.log("Remaining Posts: (none)");
+
+        const coldDrinks = await getColdDrinks();
+        console.log(coldDrinks);
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+function mainPromises() {
+    const userPost = "This is my first post";
+
+    createPost(userPost)
+        .then((createdPost) => updateLastUserActivityTime())
+        .then((lastActivityTime) => {
+            console.log(createdPost);
+            console.log(`Last Activity Time: ${lastActivityTime}`);
+            return deletePost(createdPost);
+        })
+        .then((deletedPost) => {
+            console.log(deletedPost);
+            console.log("Remaining Posts: (none)");
+
+            return getColdDrinks();
+        })
+        .then((coldDrinks) => {
+            console.log(coldDrinks);
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+}
+
+mainAsyncAwait();
